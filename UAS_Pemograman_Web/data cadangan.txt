@@ -1,0 +1,161 @@
+// Tambah Warga
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tambah_warga"])) {
+    $nik = $_POST["nik"];
+    $nama = $_POST["nama"];
+    $jenis_kelamin = $_POST["jenis_kelamin"];
+    $no_hp = $_POST["no_hp"];
+    $alamat = $_POST["alamat"];
+    $no_rumah = $_POST["no_rumah"];
+    $status = $_POST["status"];
+
+    $sql = "INSERT INTO warga (nik, nama, jenis_kelamin, no_hp, alamat, no_rumah, status) 
+            VALUES ('$nik', '$nama', '$jenis_kelamin', '$no_hp', '$alamat', '$no_rumah', '$status')";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: kelola_warga.php");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+
+<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <label for="nik">NIK:</label>
+                <input type="text" name="nik" required>
+
+                <label for="nama">Nama:</label>
+                <input type="text" name="nama" required>
+
+                <label for="jenis_kelamin">Jenis Kelamin:</label>
+                <select name="jenis_kelamin" required>
+                    <option value="L">Laki-Laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
+
+                <label for="no_hp">No. HP:</label>
+                <input type="text" name="no_hp" required>
+
+                <label for="alamat">Alamat:</label>
+                <textarea name="alamat" required></textarea>
+
+                <label for="no_rumah">No. Rumah:</label>
+                <input type="text" name="no_rumah" required>
+
+                <label for="status">Status:</label>
+                <select name="status" required>
+                    <option value="1">Aktif</option>
+                    <option value="0">Non-Aktif</option>
+                </select>
+
+                <button type="submit" name="tambah_warga">Tambah Warga</button>
+            </form>
+
+
+
+
+
+
+
+
+
+iuran
+-----
+
+<?php
+// Pastikan Anda menambahkan logika untuk menyimpan data iuran baru
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["simpan_iuran"])) {
+    // Tangkap data yang ditambahkan dari formulir
+    $tanggal_iuran = $_POST["tanggal_iuran"];
+    $warga_id = $_POST["warga_id"];
+    $nominal_iuran = $_POST["nominal_iuran"];
+    $keterangan_iuran = $_POST["keterangan_iuran"];
+    $jenis_iuran = $_POST["jenis_iuran"];
+
+    // Lakukan kueri SQL INSERT untuk menyimpan data iuran baru
+    // Sesuaikan kueri ini sesuai dengan struktur tabel
+    // Gunakan prepared statement untuk menghindari serangan SQL injection
+    $koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+
+    // Periksa koneksi
+    if ($koneksi->connect_error) {
+        die("Koneksi database gagal: " . $koneksi->connect_error);
+    }
+
+    // Kueri SQL INSERT
+    $sql_insert_iuran = "INSERT INTO iuran (tanggal, warga_id, nominal, keterangan, jenis_iuran) VALUES (?, ?, ?, ?, ?)";
+
+    // Gunakan prepared statement
+    $stmt_insert_iuran = $koneksi->prepare($sql_insert_iuran);
+    $stmt_insert_iuran->bind_param("sidsi", $tanggal_iuran, $warga_id, $nominal_iuran, $keterangan_iuran, $jenis_iuran);
+
+    // Eksekusi kueri
+    if ($stmt_insert_iuran->execute()) {
+        // Setelah berhasil menyimpan data, alihkan kembali ke halaman transaksi_iuran.php
+        header("Location: transaksi_iuran.php");
+        exit();
+    } else {
+        echo "Error: " . $sql_insert_iuran . "<br>" . $koneksi->error;
+    }
+
+    // Tutup statement dan koneksi
+    $stmt_insert_iuran->close();
+    $koneksi->close();
+}
+?>
+
+
+
+
+<main>
+        <section class="transaksi-iuran">
+            <h2>Transaksi Iuran</h2>
+
+            <!-- Formulir Tambah Iuran -->
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <label for="tanggal_iuran">Tanggal Iuran:</label>
+                <input type="date" name="tanggal_iuran" required>
+
+                <label for="warga_id">Warga:</label>
+                <!-- Pilih Warga dari data yang ada di database -->
+                <select name="warga_id" required>
+                <?php
+        // Ambil data warga dari database
+        $koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+        $sql_select_warga = "SELECT id, nama FROM warga";
+        $result_warga = $koneksi->query($sql_select_warga);
+
+        if ($result_warga->num_rows > 0) {
+            while ($row_warga = $result_warga->fetch_assoc()) {
+                echo "<option value='" . $row_warga["id"] . "'>" . $row_warga["nama"] . "</option>";
+            }
+        } else {
+            echo "<option value='' disabled selected>Tidak ada data warga</option>";
+        }
+
+        // Tutup koneksi
+        $koneksi->close();
+        ?>
+                    <!-- Isi opsi sesuai dengan data warga di database -->
+                    <!-- Contoh: <option value="1">Nama Warga 1</option> -->
+                </select>
+
+                <label for="nominal_iuran">Nominal Iuran:</label>
+                <input type="number" name="nominal_iuran" step="0.01" required>
+
+                <label for="keterangan_iuran">Keterangan:</label>
+                <textarea name="keterangan_iuran"></textarea>
+
+                <label for="jenis_iuran">Jenis Iuran:</label>
+                <select name="jenis_iuran" required>
+                    <option value="1">Kas</option>
+                    <option value="2">Sampah</option>
+                    <option value="2">Sumbangan</option>
+                    <!-- Isi opsi sesuai dengan jenis iuran di database -->
+                </select>
+
+                <button type="submit" name="simpan_iuran">Simpan Iuran</button>
+            </form>
+
+
+            <h2>Selamat datang, <?php echo $_SESSION['user_id']; ?></h2>

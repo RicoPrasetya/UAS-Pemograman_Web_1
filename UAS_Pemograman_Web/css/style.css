@@ -1,0 +1,93 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+nav {
+    background-color: #eee;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.page-button {
+    display: flex; /* Mengubah ke flex container */
+    flex-direction: column; /* Mengatur tata letak menjadi kolom */
+    align-items: center; /* Pusatkan teks dan garis tepi sebelah kiri */
+    padding: 50px 50px; /* Ubah sesuai kebutuhan ukuran tombol */
+    background-color: #fdfdfd;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 30px;
+    transition: background-color 0.3s ease; /* Efek transisi hover */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Tambahkan shadow di luar kotak */
+    font-weight: bold; /* Membuat teks tebal */
+}
+
+.page-button .fa {
+    margin-top: 10px; /* Jarak antara teks dan ikon */
+    color: #dadada; /* Warna ikon Font Awesome */
+    font-size: 40px; /* Ukuran ikon Font Awesome */
+}
+
+.page-button:nth-child(1) {
+    border-left: 20px solid rgb(0, 0, 255);
+    color: rgb(0, 0, 255); /* Warna teks sesuai dengan warna garis tepi sebelah kiri untuk tombol pertama */
+}
+
+.page-button:nth-child(2) {
+    border-left: 20px solid rgb(0, 255, 0);
+    color: rgb(0, 255, 0); /* Warna teks sesuai dengan warna garis tepi sebelah kiri untuk tombol kedua */
+}
+
+.page-button:nth-child(3) {
+    border-left: 20px solid rgb(255, 0, 0);
+    color: rgb(255, 0, 0); /* Warna teks sesuai dengan warna garis tepi sebelah kiri untuk tombol ketiga */
+}
+/* Tambahkan styling tambahan sesuai kebutuhan Anda */

@@ -1,0 +1,154 @@
+/* kelola_data_warga.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+nav {
+    background-color: #eee;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+main {
+    margin-bottom: 60px; /* Sesuaikan dengan tinggi footer Anda */
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+/* Gaya untuk halaman kelola_warga.php */
+
+/* Gaya untuk formulir tambah warga */
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1b547a;
+}
+
+/* Gaya untuk tabel data warga */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #2980b9;
+    color: #fff;
+}
+
+/* Gaya untuk tombol hapus */
+form button {
+    background-color: #e74c3c;
+}
+
+form button:hover {
+    background-color: #c0392b;
+}
+/* kelola_data_warga.css */
+
+/* ... CSS lainnya ... */
+
+/* Gaya untuk tombol Ubah */
+form button.ubah-warga {
+    background-color: #27ae60;
+}
+
+form button.ubah-warga:hover {
+    background-color: #219d54;
+}
+
+form button.ubah-warga, form button.hapus-warga {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+form button.ubah-warga {
+    background-color: #27ae60;
+}
+
+form button.ubah-warga:hover {
+    background-color: #219d54;
+}
+
+form button.hapus-warga {
+    background-color: #e74c3c;
+}
+
+form button.hapus-warga:hover {
+    background-color: #c0392b;
+}
+.tombol-tambah {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f39c12; /* Warna kuning */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.tombol-tambah:hover {
+    background-color: #d68910; /* Warna kuning sedikit lebih gelap saat dihover */
+}
