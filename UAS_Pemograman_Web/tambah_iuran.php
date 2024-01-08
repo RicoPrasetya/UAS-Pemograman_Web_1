@@ -8,6 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["simpan_iuran"])) {
     $keterangan_iuran = $_POST["keterangan_iuran"];
     $jenis_iuran = $_POST["jenis_iuran"];
 
+    if ($keterangan_iuran == "1") {
+        $keterangan_iuran = "Sudah Bayar";
+    } elseif ($keterangan_iuran == "0") {
+        $keterangan_iuran = "Belum Bayar";
+    }
     // Lakukan kueri SQL INSERT untuk menyimpan data iuran baru
     // Sesuaikan kueri ini sesuai dengan struktur tabel
     // Gunakan prepared statement untuk menghindari serangan SQL injection
@@ -61,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["simpan_iuran"])) {
         <ul>
             <li><a href="index.php">Dashboard</a></li>
             <li><a href="kelola_warga.php">Kelola Data Warga</a></li>
-            <li><a href="transaksi_iuran.php">Transaksi Iuran Warga</a></li>
-            <li><a href="laporan_transaksi.php">Laporan Transaksi</a></li>
+            <li><a href="transaksi_iuran.php">Iuran Warga</a></li>
+            <li><a href="laporan_transaksi.php">Laporan</a></li>
             <li><a href="logout.php">Logout</a></li>
             <!-- Tambahkan elemen menu lainnya sesuai kebutuhan -->
         </ul>
@@ -105,13 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["simpan_iuran"])) {
                 <input type="number" name="nominal_iuran" step="0.01" required>
 
                 <label for="keterangan_iuran">Keterangan:</label>
-                <textarea name="keterangan_iuran"></textarea>
+                <select name="keterangan_iuran" required>
+                <option value="1">Sudah Bayar</option>
+                <option value="0">Belum Bayar</option>
+                </select>
 
                 <label for="jenis_iuran">Jenis Iuran:</label>
                 <select name="jenis_iuran" required>
                     <option value="1">Kas</option>
                     <option value="2">Sampah</option>
-                    <option value="2">Sumbangan</option>
+                    <option value="3">Sumbangan</option>
                     <!-- Isi opsi sesuai dengan jenis iuran di database -->
                 </select>
 

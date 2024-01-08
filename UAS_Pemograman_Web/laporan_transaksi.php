@@ -1,44 +1,3 @@
-<?php
-// Logika untuk mendapatkan data warga yang belum membayar iuran
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cari_warga_belum_bayar"])) {
-    $bulan = $_POST["bulan"];
-    $tahun = $_POST["tahun"];
-    $jenis_iuran_filter = $_POST["jenis_iuran_filter"];
-
-    // Implementasikan logika untuk mendapatkan data warga yang belum membayar iuran
-    // Sesuaikan dengan struktur tabel dan logika bisnis Anda
-    // ...
-
-    // Simpan hasil query ke dalam array $data_warga_belum_bayar
-    $data_warga_belum_bayar = array();
-    // ...
-
-    // Tampilkan pesan jika tidak ada data yang ditemukan
-    if (empty($data_warga_belum_bayar)) {
-        echo "<p>Tidak ada data warga yang belum membayar iuran untuk bulan $bulan tahun $tahun.</p>";
-    }
-}
-
-// Logika untuk mendapatkan data jumlah KAS
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cari_jumlah_kas"])) {
-    $periode = $_POST["periode"];
-    $jenis_iuran_filter_kas = $_POST["jenis_iuran_filter_kas"];
-
-    // Implementasikan logika untuk mendapatkan data jumlah KAS
-    // Sesuaikan dengan struktur tabel dan logika bisnis Anda
-    // ...
-
-    // Simpan hasil query ke dalam variabel $jumlah_kas
-    $jumlah_kas = 0;
-    // ...
-
-    // Tampilkan pesan jika tidak ada data yang ditemukan
-    if (empty($jumlah_kas)) {
-        echo "<p>Tidak ada data jumlah KAS untuk periode $periode.</p>";
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,69 +20,98 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cari_jumlah_kas"])) {
         <ul>
             <li><a href="index.php">Dashboard</a></li>
             <li><a href="kelola_warga.php">Kelola Data Warga</a></li>
-            <li><a href="transaksi_iuran.php">Transaksi Iuran Warga</a></li>
-            <li><a href="laporan_transaksi.php">Laporan Transaksi</a></li>
+            <li><a href="transaksi_iuran.php">Iuran Warga</a></li>
+            <li><a href="laporan_transaksi.php">Laporan</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
 
     <!-- Bagian Konten -->
     <main>
-        <section class="laporan-transaksi">
-            <h2>Laporan Transaksi</h2>
+        <section class="laporan-iuran">
+            <h2>Data Warga Sudah Bayar Iuran</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Nama Warga</th>
+                        <th>Nominal</th>
+                        <th>Jenis Iuran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Ambil data iuran dengan keterangan "Sudah Bayar" dari database
+                    // Sesuaikan kueri dan struktur tabel dengan database Anda
+                    $koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+                    $sql_select_iuran_sudah_bayar = "SELECT iuran.tanggal, warga.nama, iuran.nominal, iuran.jenis_iuran
+                                                     FROM iuran
+                                                     JOIN warga ON iuran.warga_id = warga.id
+                                                     WHERE iuran.keterangan = 'Sudah Bayar'";
 
-            <!-- Formulir Data Warga yang Belum Membayar Iuran -->
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <h3>Data Warga yang Belum Membayar Iuran</h3>
-                <label for="bulan">Bulan:</label>
-                <input type="text" name="bulan" required>
+                    $result_iuran_sudah_bayar = $koneksi->query($sql_select_iuran_sudah_bayar);
 
-                <label for="tahun">Tahun:</label>
-                <input type="text" name="tahun" required>
+                    if ($result_iuran_sudah_bayar->num_rows > 0) {
+                        while ($row_iuran_sudah_bayar = $result_iuran_sudah_bayar->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row_iuran_sudah_bayar["tanggal"] . "</td>";
+                            echo "<td>" . $row_iuran_sudah_bayar["nama"] . "</td>";
+                            echo "<td>" . $row_iuran_sudah_bayar["nominal"] . "</td>";
+                            echo "<td>" . $row_iuran_sudah_bayar["jenis_iuran"] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4'>Tidak ada data iuran sudah bayar.</td></tr>";
+                    }
 
-                <label for="jenis_iuran_filter">Jenis Iuran:</label>
-                <select name="jenis_iuran_filter">
-                    <!-- Isi opsi sesuai dengan jenis iuran di database -->
-                    <option value="1">Kas</option>
-                    <option value="2">Sampah</option>
-                    <option value="2">Sumbangan</option>
-                    <!-- ... -->
-                </select>
+                    // Tutup koneksi
+                    $koneksi->close();
+                    ?>
+                </tbody>
+            </table>
+        </section>
 
-                <button type="submit" name="cari_warga_belum_bayar">Cari</button>
-            </form>
+        <section class="laporan-iuran">
+            <h2>Data Warga Belum Bayar Iuran</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Nama Warga</th>
+                        <th>Nominal</th>
+                        <th>Jenis Iuran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Ambil data iuran dengan keterangan "Belum Bayar" dari database
+                    // Sesuaikan kueri dan struktur tabel dengan database Anda
+                    $koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+                    $sql_select_iuran_belum_bayar = "SELECT iuran.tanggal, warga.nama, iuran.nominal, iuran.jenis_iuran
+                                                     FROM iuran
+                                                     JOIN warga ON iuran.warga_id = warga.id
+                                                     WHERE iuran.keterangan = 'Belum Bayar'";
 
-            <!-- Tampilkan Data Warga yang Belum Membayar Iuran -->
-            <?php
-            // Implementasikan tampilan data warga yang belum membayar iuran di sini
-            // Gunakan variabel $data_warga_belum_bayar
-            // ...
-            ?>
+                    $result_iuran_belum_bayar = $koneksi->query($sql_select_iuran_belum_bayar);
 
-            <!-- Formulir Jumlah KAS -->
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <h3>Data Jumlah KAS</h3>
-                <label for="periode">Periode:</label>
-                <input type="text" name="periode" required>
+                    if ($result_iuran_belum_bayar->num_rows > 0) {
+                        while ($row_iuran_belum_bayar = $result_iuran_belum_bayar->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row_iuran_belum_bayar["tanggal"] . "</td>";
+                            echo "<td>" . $row_iuran_belum_bayar["nama"] . "</td>";
+                            echo "<td>" . $row_iuran_belum_bayar["nominal"] . "</td>";
+                            echo "<td>" . $row_iuran_belum_bayar["jenis_iuran"] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4'>Tidak ada data iuran belum bayar.</td></tr>";
+                    }
 
-                <label for="jenis_iuran_filter_kas">Jenis Iuran:</label>
-                <select name="jenis_iuran_filter_kas">
-                    <!-- Isi opsi sesuai dengan jenis iuran di database -->
-                    <option value="1">Kas</option>
-                    <option value="2">Sampah</option>
-                    <option value="2">Sumbangan</option>
-                    <!-- ... -->
-                </select>
-
-                <button type="submit" name="cari_jumlah_kas">Cari</button>
-            </form>
-
-            <!-- Tampilkan Data Jumlah KAS -->
-            <?php
-            // Implementasikan tampilan data jumlah KAS di sini
-            // Gunakan variabel $jumlah_kas
-            // ...
-            ?>
+                    // Tutup koneksi
+                    $koneksi->close();
+                    ?>
+                </tbody>
+            </table>
         </section>
     </main>
 

@@ -122,3 +122,25 @@ th {
 .tombol-tambah:hover {
     background-color: #d68910; /* Warna kuning sedikit lebih gelap saat dihover */
 }
+
+/* CSS untuk tombol Ubah dan Hapus */
+/* CSS untuk tombol Ubah dan Hapus */
+button.ubah-iuran-btn, button.hapus-iuran-btn {
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+}
+
+button.ubah-iuran-btn {
+    background-color: #4caf50;
+}
+
+button.hapus-iuran-btn {
+    background-color: #f44336;
+}
+
+button.ubah-iuran-btn:hover, button.hapus-iuran-btn:hover {
+    opacity: 0.8;
+}

@@ -73,8 +73,8 @@ $conn->close();
         <ul>
             <li><a href="index.php">Dashboard</a></li>
             <li><a href="kelola_warga.php">Kelola Data Warga</a></li>
-            <li><a href="transaksi_iuran.php">Transaksi Iuran Warga</a></li>
-            <li><a href="laporan_transaksi.php">Laporan Transaksi</a></li>
+            <li><a href="transaksi_iuran.php">Iuran Warga</a></li>
+            <li><a href="laporan_transaksi.php">Laporan</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>

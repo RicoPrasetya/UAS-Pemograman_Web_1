@@ -1,3 +1,27 @@
+<?php
+$koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+
+// Check connection
+if ($koneksi->connect_error) {
+    die("Connection failed: " . $koneksi->connect_error);
+}
+
+// Proses penghapusan iuran
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["hapus_iuran"])) {
+    $id_iuran_to_delete = $_POST["hapus_iuran"];
+
+    // Query hapus iuran sesuai dengan ID
+    $sql_delete_iuran = "DELETE FROM iuran WHERE id = $id_iuran_to_delete";
+
+    if ($koneksi->query($sql_delete_iuran) === TRUE) {
+        echo "<script>alert('Iuran berhasil dihapus.');</script>";
+    } else {
+        echo "<script>alert('Error: " . $koneksi->error . "');</script>";
+    }
+}
+
+// ... (Kode sebelumnya untuk menampilkan data iuran tetap sama)
+?>
 
 
 <!DOCTYPE html>
@@ -21,8 +45,8 @@
         <ul>
             <li><a href="index.php">Dashboard</a></li>
             <li><a href="kelola_warga.php">Kelola Data Warga</a></li>
-            <li><a href="transaksi_iuran.php">Transaksi Iuran Warga</a></li>
-            <li><a href="laporan_transaksi.php">Laporan Transaksi</a></li>
+            <li><a href="transaksi_iuran.php">Iuran Warga</a></li>
+            <li><a href="laporan_transaksi.php">Laporan</a></li>
             <li><a href="logout.php">Logout</a></li>
             <!-- Tambahkan elemen menu lainnya sesuai kebutuhan -->
         </ul>
@@ -31,47 +55,71 @@
     <!-- Bagian Konten -->
     <main>
             <!-- Daftar KAS Warga -->
-            <h2>Daftar KAS Warga</h2>
+            <h2>Daftar Iuran Warga</h2>
 
             <a href="tambah_iuran.php" class="tombol-tambah">Tambah iuran</a>
             <table>
-                <thead>
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>ID Warga</th>
-                        <th>Nominal</th>
-                        <th>Keterangan</th>
-                        <th>Jenis Iuran</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Ambil data iuran dari database dan tampilkan di tabel
-                    // Sesuaikan kueri dan struktur tabel dengan database Anda
-                    $koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
-                    $sql_select_iuran = "SELECT * FROM iuran";
-                    $result_iuran = $koneksi->query($sql_select_iuran);
+    <thead>
+        <tr>
+            <th>Tanggal</th>
+            <th>Nama Warga</th>
+            <th>Nominal</th>
+            <th>Keterangan</th>
+            <th>Jenis Iuran</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+        $sql_select_iuran = "SELECT * FROM iuran";
+        $result_iuran = $koneksi->query($sql_select_iuran);
 
-                    if ($result_iuran->num_rows > 0) {
-                        while ($row_iuran = $result_iuran->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row_iuran["tanggal"] . "</td>";
-                            // Tampilkan nama warga (sesuaikan dengan struktur tabel dan kueri yang benar)
-                            echo "<td>" . $row_iuran["warga_id"] . "</td>";
-                            echo "<td>" . $row_iuran["nominal"] . "</td>";
-                            echo "<td>" . $row_iuran["keterangan"] . "</td>";
-                            echo "<td>" . $row_iuran["jenis_iuran"] . "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>Tidak ada data iuran.</td></tr>";
-                    }
+        if ($result_iuran->num_rows > 0) {
+            while ($row_iuran = $result_iuran->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row_iuran["tanggal"] . "</td>";
+                // Ambil data warga berdasarkan ID
+$warga_id = $row_iuran["warga_id"];
+$koneksi = new mysqli("localhost", "root", "", "db_kas_rt");
+$sql_select_warga = "SELECT nama FROM warga WHERE id = $warga_id";
+$result_warga = $koneksi->query($sql_select_warga);
 
-                    // Tutup koneksi
-                    $koneksi->close();
-                    ?>
-                </tbody>
-            </table>
+if ($result_warga->num_rows > 0) {
+    $row_warga = $result_warga->fetch_assoc();
+    $nama_warga = $row_warga["nama"];
+} else {
+    $nama_warga = "Nama Warga Tidak Ditemukan";
+}
+                // Tampilkan nama warga (sesuaikan dengan struktur tabel dan kueri yang benar)
+                echo "<td>" . $nama_warga . "</td>";
+                echo "<td>" . $row_iuran["nominal"] . "</td>";
+                echo "<td>" . $row_iuran["keterangan"] . "</td>";
+                echo "<td>" . $row_iuran["jenis_iuran"] . "</td>";
+                // ...
+echo "<td>";
+echo "<form method='POST' action='ubah_iuran.php?id=" . $row_iuran['id'] . "'>";
+echo "<input type='hidden' name='ubah_iuran' value='" . $row_iuran['id'] . "'>";
+echo "<button type='submit' class='ubah-iuran-btn'>Ubah</button>";
+echo "</form>";
+echo "<form method='POST' action='" . htmlspecialchars($_SERVER["PHP_SELF"]) . "'>";
+echo "<input type='hidden' name='hapus_iuran' value='" . $row_iuran['id'] . "'>";
+echo "<button type='submit' class='hapus-iuran-btn' onclick='return confirm(\"Apakah Anda yakin ingin menghapus?\");'>Hapus</button>";
+echo "</form>";
+echo "</td>";
+// ...
+
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>Tidak ada data iuran.</td></tr>";
+        }
+
+        $koneksi->close();
+        ?>
+    </tbody>
+</table>
+
         </section>
     </main>
 
