@@ -2,8 +2,6 @@
 ## Sistem Informasi Iuran RT
 **KELOMPOK 7**
 
-
-
 **ANGGOTA :**
 1. RICO PRASETYA
 2. BAYU MAULANA AYASSY
