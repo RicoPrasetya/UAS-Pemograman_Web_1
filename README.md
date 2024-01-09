@@ -7,6 +7,6 @@
 2. BAYU MAULANA AYASSY - 312210166
 3. CAHYO HIDAYATULLAH - 312210079
 
-### Link Video Demo Program
+### Link Demo Youtube
 
 https://youtu.be/oVP-o2zmZTY?si=ZkrUmc5pA4FSgDTG
