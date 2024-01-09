@@ -68,7 +68,7 @@ footer {
     transition: background-color 0.3s ease; /* Efek transisi hover */
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Tambahkan shadow di luar kotak */
     font-weight: bold; /* Membuat teks tebal */
-    width: 30%;
+    width: 25%;
 }
 
 .page-button .fa {

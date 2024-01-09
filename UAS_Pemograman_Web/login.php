@@ -61,7 +61,7 @@ $koneksi->close();
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="logo-container">
         <img src="img/kas.png" alt="Logo Kas">
-        <h1>Sistem Informasi iuran RT</h1>
+        <h1>Sistem Informasi Iuran RT</h1>
         </div>
             <h2>Login</h2>
             <label for="username">Username:</label>
@@ -71,7 +71,7 @@ $koneksi->close();
             <input type="password" name="password" required>
 
             <button type="submit">Login</button>
-            <p class="copyright">Copyright © 2024 Sistem Informasi RT</p>
+            <p class="copyright">Copyright © 2024 Sistem Informasi Iuran RT</p>
         </form>
     </main>
 

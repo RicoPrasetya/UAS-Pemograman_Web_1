@@ -44,9 +44,9 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Konten utama website akan dimuat di sini -->
         <h2>Dashboard</h2>
         <div class="button-container">
-            <a href="kelola_warga.php" class="page-button">Kelola Data Warga <i class="fa fa-user"></i></a>
-            <a href="transaksi_iuran.php" class="page-button">Transaksi Iuran Warga <i class="fa fa-dollar-sign"></i></a>
-            <a href="laporan_transaksi.php" class="page-button">Laporan Transaksi <i class="fa fa-file-text"></i></a>
+            <a href="kelola_warga.php" class="page-button">Kelola Data Warga<i class="fa fa-user"></i></a>
+            <a href="transaksi_iuran.php" class="page-button">Iuran Warga<i class="fa fa-dollar-sign"></i></a>
+            <a href="laporan_transaksi.php" class="page-button">Laporan<i class="fa fa-file-text"></i></a>
             <!-- Tambahkan tombol untuk halaman lainnya sesuai kebutuhan -->
         </div>
     </main>

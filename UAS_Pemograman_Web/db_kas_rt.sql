@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2024 at 11:59 AM
+-- Generation Time: Jan 09, 2024 at 03:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,8 +41,10 @@ CREATE TABLE `iuran` (
 --
 
 INSERT INTO `iuran` (`id`, `tanggal`, `warga_id`, `nominal`, `keterangan`, `jenis_iuran`) VALUES
-(1, '2024-01-05', 17, 20000.00, 'bayar sampah', 2),
-(2, '2024-01-02', 18, 50000.00, 'Bayar sumbangan', 2);
+(3, '2024-01-08', 17, 20000.00, 'Sudah Bayar', 2),
+(4, '2024-01-02', 17, 50000.00, 'Belum Bayar', 1),
+(7, '2024-01-05', 18, 80000.00, 'Sudah Bayar', 3),
+(8, '2024-01-03', 19, 40000.00, 'Belum Bayar', 1);
 
 -- --------------------------------------------------------
 
@@ -91,8 +93,9 @@ CREATE TABLE `warga` (
 --
 
 INSERT INTO `warga` (`id`, `nik`, `nama`, `jenis_kelamin`, `no_hp`, `alamat`, `no_rumah`, `status`, `users_id`) VALUES
-(17, '123', 'adi', 'L', '080123456789', 'bekasi', '15', 1, 0),
-(18, '124', 'agung', 'L', '081234567890', 'bekasi', '12', 1, 0);
+(17, '123', 'Rico', 'L', '080123456789', 'Bekasi', '15', 1, 0),
+(18, '124', 'Bayu', 'L', '081234567890', 'Bekasi', '12', 1, 0),
+(19, '125', 'Cahyo', 'L', '089876543211', 'Bekasi', '16', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -129,7 +132,7 @@ ALTER TABLE `warga`
 -- AUTO_INCREMENT for table `iuran`
 --
 ALTER TABLE `iuran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -141,7 +144,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `warga`
 --
 ALTER TABLE `warga`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables

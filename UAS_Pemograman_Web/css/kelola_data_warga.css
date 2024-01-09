@@ -120,8 +120,11 @@ form button.ubah-warga:hover {
 }
 
 form button.ubah-warga, form button.hapus-warga {
-    display: inline-block;
-    margin-right: 30px;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
 }
 
 form button.ubah-warga {
